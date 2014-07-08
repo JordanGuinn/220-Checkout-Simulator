@@ -25,8 +25,7 @@ class Cashier {
    private int totalCustomers;
 
    // Constructor
-   Cashier()
-   {
+   Cashier() {
 	   startTime = 0;
 	   endTime = 0;
 	   totalFreeTime = 0;
@@ -37,8 +36,7 @@ class Cashier {
 
 
    // Constructor with cashier id
-   Cashier(int cashierId)
-   {
+   Cashier(int cashierId)  {
 	   cashierID = cashierId;
 	   startTime = 0;
 	   endTime = 0;
@@ -49,28 +47,24 @@ class Cashier {
 
    // accessor methods
 
-   int getCashierID () 
-   {
+   int getCashierID () {
 	return cashierID;
    }
 
-   Customer getCustomer() 
-   {
+   Customer getCustomer() {
 	// add statements
 	return currentCustomer;
    }
 
    // need this to setup pririty queue
-   int getEndBusyIntervalTime() 
-   {
+   int getEndBusyIntervalTime() {
         // return end time of busy interval
 	return endTime;
    }
 
    // functions for state transition
    // FREE -> BUSY :
-   void freeToBusy (Customer currentCustomer, int currentTime)
-   {
+   void freeToBusy (Customer currentCustomer, int currentTime) {
   	// Main goal  : switch from free interval to busy interval
   	//
   	// end free interval, start busy interval
@@ -85,8 +79,7 @@ class Cashier {
    }
 
    // BUSY -> FREE :
-   Customer busyToFree ()
-   {
+   Customer busyToFree () {
    	// Main goal : switch from busy interval to free interval
    	// 
   	// steps     : update totalBusyTime 
@@ -98,8 +91,7 @@ class Cashier {
    }
 
    // need this method at the end of simulation to update cashier data
-   void setEndIntervalTime (int endsimulationtime, int intervalType)
-   {
+   void setEndIntervalTime (int endsimulationtime, int intervalType) {
   	// for end of simulation
   	// set endTime, 
   	// for FREE interval, update totalFreeTime
@@ -114,8 +106,7 @@ class Cashier {
    }
 
    // functions for printing statistics :
-   void printStatistics () 
-   {
+   void printStatistics () {
   	// print cashier statistics, see project statement
 
   	System.out.println("\t\tCashier ID             : "+cashierID);
@@ -127,8 +118,7 @@ class Cashier {
    }
 
    // Returns all cashier data
-   public String toString()
-   {
+   public String toString() {
 	return "Cashier:"+cashierID+":"+startTime+"-"+endTime+":Customer:"+currentCustomer;
    }
 
