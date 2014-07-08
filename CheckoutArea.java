@@ -53,7 +53,6 @@ class CheckoutArea {
 
 	// Constructor
 	public CheckoutArea() {
-
 	}
 
 	// Constructor
