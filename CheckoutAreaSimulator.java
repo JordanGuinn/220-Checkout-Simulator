@@ -24,10 +24,10 @@ class CheckoutAreaSimulator {
 	private int chancesOfArrival, maxCheckoutTime;
 
 	// Data for statistics
-	private int numGoaway, numServed, totalWaitingTime;
+	private int numGoAway, numServed, totalWaitingTime;
 
 	private int customerIDCounter; // Customer's number in CheckoutAreaSimulator
-	private CheckoutArea checkoutarea; // Checkout area object
+	private CheckoutArea checkoutArea; // Checkout area object
 	private Scanner dataFile; // Customer data from file
 	private Random dataRandom; // Random customer data
 
@@ -40,7 +40,7 @@ class CheckoutAreaSimulator {
 		anyNewArrival = false;
 		customerIDCounter = 0;
 		numServed = 0;
-		numGoaway = 0;
+		numGoAway = 0;
 		totalWaitingTime = 0;
 
 	}
@@ -76,8 +76,7 @@ class CheckoutAreaSimulator {
 
 		// Reprompt if number entered is invalid
 		while (chancesOfArrival > 100 || chancesOfArrival < 1) {
-			System.out
-					.println("Number needs to be less than or equal to 100 and greater than"
+			System.out.println("Number needs to be less than or equal to 100 and greater than"
 							+ "zero: ");
 			chancesOfArrival = input.nextInt();
 
@@ -194,29 +193,29 @@ class CheckoutAreaSimulator {
 						+ " unit(s)\t");
 
 				// #2: Determine whether or not customer will wait based on line
-				if (!checkoutarea.isCustomerQTooLong()) {
+				if (!checkoutArea.isCustomerQTooLong()) {
 					// If so, place customer in queue if there's room
-					checkoutarea.insertCustomerQ(newCustomer);
+					checkoutArea.insertCustomerQ(newCustomer);
 					System.out.println("\tCustomer #" + customerIDCounter
 							+ " is waiting in the customer queue \t");
 				} else {
 					// Otherwise, the customer leaves
 					System.out.println("\tCustomer #" + customerIDCounter
 							+ " leaves due to a long queue \t");
-					numGoaway++;
+					numGoAway++;
 				}
 			}
 
 			// #3: Service customers, thereby freeing cashiers
-			for (int i = 0; i < checkoutarea.numBusyCashiers(); i++) {
-				if (checkoutarea.getFrontBusyCashierQ()
+			for (int i = 0; i < checkoutArea.numBusyCashiers(); i++) {
+				if (checkoutArea.getFrontBusyCashierQ()
 						.getEndBusyIntervalTime() <= currentTime) {
 					// Set cashier from busy to free
-					tempCustomer = checkoutarea.getFrontBusyCashierQ()
+					tempCustomer = checkoutArea.getFrontBusyCashierQ()
 							.busyToFree();
 					// Remove busy cashier place in free queue
-					tempCashier = checkoutarea.removeBusyCashierQ();
-					checkoutarea.insertFreeCashierQ(tempCashier);
+					tempCashier = checkoutArea.removeBusyCashierQ();
+					checkoutArea.insertFreeCashierQ(tempCashier);
 
 					// Prompt user that the customer was served and the
 					// cashier is now free
@@ -231,19 +230,19 @@ class CheckoutAreaSimulator {
 
 			}
 			// #4: Send waiting customers to now free cashiers
-			for (int i = 0; i < checkoutarea.numFreeCashiers(); i++) {
-				if (checkoutarea.numFreeCashiers() != 0
-						&& !checkoutarea.emptyCustomerQ()) {
+			for (int i = 0; i < checkoutArea.numFreeCashiers(); i++) {
+				if (checkoutArea.numFreeCashiers() != 0
+						&& !checkoutArea.emptyCustomerQ()) {
 
 					// Set current cashier to free cashier
-					currentCashier = checkoutarea.removeFreeCashierQ();
+					currentCashier = checkoutArea.removeFreeCashierQ();
 
 					// Remove customer from queue
-					queueCustomer = checkoutarea.removeCustomerQ();
+					queueCustomer = checkoutArea.removeCustomerQ();
 
 					// Insert cashier to busy queue
 					currentCashier.freeToBusy(queueCustomer, currentTime);
-					checkoutarea.insertBusyCashierQ(currentCashier);
+					checkoutArea.insertBusyCashierQ(currentCashier);
 					numServed++;
 
 					// Prompt the user that the customer is now being served
@@ -280,7 +279,7 @@ class CheckoutAreaSimulator {
 
 		System.out.println("\t# of total arrival customers\t:"
 				+ this.customerIDCounter);
-		System.out.println("\t# of customers that left\t:" + numGoaway);
+		System.out.println("\t# of customers that left\t:" + numGoAway);
 		System.out.println("\t# of customers served\t\t:" + numServed);
 
 		System.out.println();
@@ -288,11 +287,11 @@ class CheckoutAreaSimulator {
 		System.out.println();
 
 		System.out.println("\t# of waiting Customers\t: "
-				+ checkoutarea.numWaitingCustomers());
+				+ checkoutArea.numWaitingCustomers());
 		System.out.println("\t# of busy Cashiers\t: "
-				+ checkoutarea.numBusyCashiers());
+				+ checkoutArea.numBusyCashiers());
 		System.out.println("\t# of free Cashiers\t: "
-				+ checkoutarea.numFreeCashiers());
+				+ checkoutArea.numFreeCashiers());
 
 		System.out.println();
 		System.out.println("Total waiting time\t:" + totalWaitingTime);
@@ -306,9 +305,9 @@ class CheckoutAreaSimulator {
 		System.out.println();
 		System.out.println("Busy Cashier info: ");
 		System.out.println();
-		for (int i = 0; i <= checkoutarea.numBusyCashiers(); i++) {
-			if (checkoutarea.numBusyCashiers() != 0) {
-				Cashier currentCashier = checkoutarea.removeBusyCashierQ();
+		for (int i = 0; i <= checkoutArea.numBusyCashiers(); i++) {
+			if (checkoutArea.numBusyCashiers() != 0) {
+				Cashier currentCashier = checkoutArea.removeBusyCashierQ();
 				currentCashier.setEndIntervalTime(simulationTime, Cashier.BUSY);
 				currentCashier.printStatistics();
 			}
